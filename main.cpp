@@ -17,7 +17,7 @@ class Example : public olc::PixelGameEngine
 public:
 	Example()
 	{
-		sAppName = "Example";
+		sAppName = "Proto Game";
 	}
 	struct shape
 	{
