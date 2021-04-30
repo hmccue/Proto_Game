@@ -138,7 +138,9 @@ public:
 				m.nSize = 4;
 				//DrawCircle(m.x, m.y, m.nSize, olc::DARK_CYAN);
 				// minion sprite 
+				SetPixelMode(olc::Pixel::ALPHA);
 				DrawSprite(m.x, m.y, sprMinion);
+				SetPixelMode(olc::Pixel::NORMAL);
 
 				// minion bouncing off the walls 
 				if (m.x > 192 || m.x < 0) { m.dx = -1 * m.dx; } // vertical wall 
@@ -348,11 +350,15 @@ public:
 
 			// draw player
 			// DrawCircle(player.x, player.y, player.nSize, olc::WHITE);
+			SetPixelMode(olc::Pixel::ALPHA);
 			DrawPartialSprite(player.x, player.y, sprPlayer, 0, 0, 16, 16);
+			SetPixelMode(olc::Pixel::NORMAL);
 
 			// Drawing keith if comes to that point 
 			if (playerstat.points > 2) {
+				SetPixelMode(olc::Pixel::ALPHA);
 				DrawPartialSprite(keith.x, keith.y, sprKeith, 0, 0, 32, 32);
+				SetPixelMode(olc::Pixel::NORMAL);
 				// drawing keiths helath bar 
 				FillRect(168, 25, keithstat.health / 2, 5, olc::RED);
 			}
