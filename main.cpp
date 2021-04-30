@@ -45,7 +45,7 @@ public:
 	stats keithstat;
 	stats playerstat;
 	// Sprite stuff 
-	olc::Sprite* sprPlayer = new olc::Sprite("./Gnome2.png");
+	olc::Sprite* sprPlayer = new olc::Sprite("./tarles2.png");
 	//olc::Decal* playerDecal = new olc::Decal(sprPlayer)
 	olc::Sprite* sprMinion = new olc::Sprite("./monster.png");
 	olc::Sprite* sprKeith = new olc::Sprite("./Keith.png");
