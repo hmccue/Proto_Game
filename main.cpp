@@ -59,26 +59,7 @@ public:
 	bool OnUserCreate() override
 	{
 		// Clean screen 
-		Clear(olc::BLANK); 
-		// set up start screen here??? Idea play, leave, tutorial Cases????  
-		// initial plaayer spot 
-		player.x = 150.0f; player.y = 120.0f; player.dx = 0.0f; player.dy = 0.0f; player.nSize = 16;
-		keith.x = 200.0f; keith.y = 200.0f; keith.dx = 10.0f; keith.dy =10.0f; keith.nSize = 32;
-		// intializing 2 minions
-		minion.push_back({ 130.0f,100.0f,45.0f,30.0f,0.0f,(int)16 });
-		minion.push_back({ 120.0f,120.0f,-15.0f,28.0f,0.0f,(int)16 });
-		minion.push_back({ 150.0f,20.0f,10.0f,-14.0f,0.0f,(int)16 });
-		// initial tiles 
-		tiles.push_back({ 0.0f,0.0f,0.0f,0.0f,0.0f,int(4) });
-		// initalizing screen set up
-		int nHeight = 200;
-		int nWidth = 200;
-		SetScreenSize(nHeight, nWidth);
-		// initializing the player statitics
-		keithstat.health = 50; 
-		playerstat.health = 100;
-		playerstat.points = 0; 
-		mode = 3;
+		resetGame();
 		return true;
 	}
 
@@ -109,6 +90,7 @@ public:
 			DrawPartialSprite(10, 10, sprPlayer, 0, 0, 16, 16);
 			if (GetKey(olc::Key::ENTER).bHeld) { mode = 1; } // has to re update every on user update, find a way for it to stay persistent 
 			if (GetKey(olc::Key::SPACE).bHeld) { mode = 2; }
+			if (GetKey(olc::Key::ESCAPE).bHeld) { return false; }
 			break;
 		}
 		case 1: {
@@ -161,6 +143,7 @@ public:
 			{
 				b.x += b.dx * fElapsedTime;
 				b.y += b.dy * fElapsedTime;
+
 				DrawCircle(b.x, b.y, 2, olc::WHITE);
 				// checking collision with minions 
 				for (auto& m : minion)
@@ -170,7 +153,7 @@ public:
 						//remove bullet 
 						b.x = -100; b.dx = 0; b.dy = 0;
 						// remove minion 
-						m.y = -100; m.dy = 0; m.dx = 0;
+						m.y = -100; m.x = -500.0f; m.dy = 0; m.dx = 0;
 						playerstat.points += 1;
 					}
 				}
@@ -380,14 +363,24 @@ public:
 				Clear(olc::BLACK);
 				std::stringstream game;
 				game << "GAME OVER";
-				DrawString(100, 100, game.str(), olc::WHITE);
+				DrawString(60, 80, game.str(), olc::WHITE);
+				game.str("Esc to exit");
+				DrawString(30, 100, game.str(), olc::DARK_YELLOW);
+				game.str("Y returns to start");
+				DrawString(30, 110, game.str(), olc::DARK_YELLOW);
+				if (GetKey(olc::Key::Y).bHeld) { resetGame(); }
 			}
 
 			if (keithstat.health <= 0) {
 				Clear(olc::BLACK);
 				std::stringstream game;
 				game << "You WIN!! ";
-				DrawString(100, 100, game.str(), olc::WHITE);
+				DrawString(60, 80, game.str(), olc::WHITE);
+				game.str("Esc to exit");
+				DrawString(30, 100, game.str(), olc::DARK_YELLOW);
+				game.str("Y returns to start");
+				DrawString(30, 110, game.str(), olc::DARK_YELLOW);
+				if (GetKey(olc::Key::Y).bHeld) { resetGame(); }
 			}
 			// escape for game exit 
 			if (GetKey(olc::Key::ESCAPE).bHeld) {
@@ -429,6 +422,29 @@ public:
 	bool IsPointInsideRect(float x, float y, float xplus, float yplus, float xcheck, float ycheck)
 	{
 		return (xcheck > x && xcheck <xplus && ycheck>y && ycheck < yplus);
+	}
+	void resetGame()
+	{
+		Clear(olc::BLANK);
+		// set up start screen here??? Idea play, leave, tutorial Cases????  
+		// initial plaayer spot 
+		player.x = 150.0f; player.y = 120.0f; player.dx = 0.0f; player.dy = 0.0f; player.nSize = 16;
+		keith.x = 200.0f; keith.y = 200.0f; keith.dx = 10.0f; keith.dy = 10.0f; keith.nSize = 32;
+		// intializing 2 minions
+		minion.push_back({ 130.0f,100.0f,45.0f,30.0f,0.0f,(int)16 });
+		minion.push_back({ 120.0f,120.0f,-15.0f,28.0f,0.0f,(int)16 });
+		minion.push_back({ 150.0f,20.0f,10.0f,-14.0f,0.0f,(int)16 });
+		// initial tiles 
+		tiles.push_back({ 0.0f,0.0f,0.0f,0.0f,0.0f,int(4) });
+		// initalizing screen set up
+		int nHeight = 200;
+		int nWidth = 200;
+		SetScreenSize(nHeight, nWidth);
+		// initializing the player statitics
+		keithstat.health = 50;
+		playerstat.health = 100;
+		playerstat.points = 0;
+		mode = 3;
 	}
 };
 
