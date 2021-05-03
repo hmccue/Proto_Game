@@ -431,6 +431,7 @@ public:
 		player.x = 150.0f; player.y = 120.0f; player.dx = 0.0f; player.dy = 0.0f; player.nSize = 16;
 		keith.x = 200.0f; keith.y = 200.0f; keith.dx = 10.0f; keith.dy = 10.0f; keith.nSize = 32;
 		// intializing 2 minions
+		minion.clear();
 		minion.push_back({ 130.0f,100.0f,45.0f,30.0f,0.0f,(int)16 });
 		minion.push_back({ 120.0f,120.0f,-15.0f,28.0f,0.0f,(int)16 });
 		minion.push_back({ 150.0f,20.0f,10.0f,-14.0f,0.0f,(int)16 });
